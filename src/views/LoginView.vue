@@ -119,7 +119,7 @@ const handleLogin = async () => {
     await auth.login({ email: email.value, password: password.value, rememberMe: rememberMe.value })
 
     if (auth.user) {
-      router.push('/')
+      router.push('/dashboard')
     }
   } catch (err: unknown) {
     if (err instanceof Error) {

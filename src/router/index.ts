@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import LoginView from '@/views/LoginView.vue'
-import HomeView from '@/views/HomeView.vue'
+import DashboardView from '@/views/DashboardView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView,
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
     },
     {
       path: '/login',
@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
   if (!auth.isAuthenticated && to.name !== 'login') {
     next({ name: 'login' })
   } else if (auth.isAuthenticated && to.name === 'login') {
-    next({ name: 'home' })
+    next({ name: 'dashboard' })
   } else {
     next()
   }
