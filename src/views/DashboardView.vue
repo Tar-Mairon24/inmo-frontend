@@ -11,13 +11,6 @@
         @select="showDetails"
       />
     </div>
-    <div v-if="selectedProperty" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-8 max-w-lg w-full">
-        <h2 class="text-2xl font-bold mb-4">{{ selectedProperty.title }}</h2>
-        <!-- Add more details here -->
-        <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded" @click="selectedProperty = null">Close</button>
-      </div>
-    </div>
   </div>
 
   <footer class="bg-white shadow mt-8">
@@ -30,19 +23,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import PropertyCard from '@/components/PropertyCard.vue'
-import { PropertyCard as Property } from '@/models/Property'
+import type { PropertyCard as Property } from '@/models/Property'
 import { useAuthStore } from '@/stores/authStore'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
 
 const properties = ref<Property[]>([])
-const selectedProperty = ref<Property | null>(null)
-
 
 const auth = useAuthStore()
 
 const showDetails = (property: Property) => {
-  selectedProperty.value = property
+  router.push(`/property/${property.id}`)
 }
 
 onMounted(async () => {
