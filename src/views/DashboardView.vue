@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import PropertyCard from '@/components/PropertyCard.vue'
-import { PropertyCard as Property } from '@/models/Property'
+import type { PropertyCard as Property } from '@/models/Property'
 import { useAuthStore } from '@/stores/authStore'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
