@@ -46,24 +46,27 @@ const showDetails = (property: Property) => {
 }
 
 onMounted(async () => {
-  const response = await fetch('http://localhost:3000/api/v1/properties', {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${auth.token}`,
-      'Content-Type': 'application/json',
-    },
-  })
-  const data = await response.json()
+  try {
+    const response = await fetch('http://localhost:8081/api/v1/properties', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+    const data = await response.json()
 
-  if (Array.isArray(data)) {
-    properties.value = data.map((property: Property) => ({
-      ...property,
-      image: placeholderImage
-    }))
-  } else {
-    console.error('Unexpected data format:', data)
+    if (Array.isArray(data)) {
+      properties.value = data.map((property: Property) => ({
+        ...property,
+        image: placeholderImage
+      }))
+    } else {
+      console.error('Unexpected data format:', data)
+    }
+  } catch (error) {
+    console.error('Error fetching properties:', error)
   }
-
 })
 
 const router = useRouter()
