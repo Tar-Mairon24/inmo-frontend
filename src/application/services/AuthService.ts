@@ -1,7 +1,7 @@
-import type { User } from "../../domain/entities/user"
-import type { LoginCredentials } from "../../domain/entities/auth"
-import type { IAuthRepository } from "../../domain/repositories/IAuthRepository"
-import { AuthStorage } from "../../infrastructure/storage/AuthStorage"
+import type { User } from "@/domain/entities/user"
+import type { AuthResponse, LoginCredentials } from "@/domain/entities/auth"
+import type { IAuthRepository } from "@/domain/repositories/IAuthRepository"
+import { AuthStorage } from "@/infrastructure/storage/AuthStorage"
 
 export class AuthService {
   constructor(
@@ -9,10 +9,11 @@ export class AuthService {
     private storage: AuthStorage
   ) {}
 
-  async login(credentials: LoginCredentials): Promise<User> {
-    const user = await this.authRepository.login(credentials)
-    this.storage.saveUser(user, credentials.rememberMe || false)
-    return user
+  async login(credentials: LoginCredentials): Promise<AuthResponse> {
+    console.log("Remember Me:", credentials.rememberMe)
+    const response = await this.authRepository.login(credentials)
+    this.storage.saveUser(response.data, credentials.rememberMe || false)
+    return response
   }
 
   async logout(): Promise<void> {

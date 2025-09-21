@@ -5,27 +5,25 @@ export class BaseApi {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
       headers: {
         'Content-Type': 'application/json',
-        ...(options?.headers || {})
       },
+      ...options,
       credentials: 'include',
-      ...options
-    })
-      .then(res => res.json())
-      .catch(err => {
-        console.error('API request error:', err)
-        throw err
       })
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('API Error:', errorText)
+        throw new Error(`API request failed with status ${response.status}`)
+      }
 
-    if (!response.ok) {
-      throw new Error(
-        `API request failed with status ${response.status}`,
-        { cause: response.message || 'Unknown error' }
-      )
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error('Network or parsing error:', error)
+      throw error
     }
-
-    return response.json() as Promise<T>
   }
 }

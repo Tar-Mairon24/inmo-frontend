@@ -122,11 +122,7 @@ const handleLogin = async () => {
       rememberMe: rememberMe.value
     })
 
-    if (authStore.user) {
-      router.push('/dashboard')
-    } else {
-      error.value = 'Login failed'
-    }
+    router.push('/dashboard')
 
   } catch (err: unknown) {
     if (err instanceof Error) {
