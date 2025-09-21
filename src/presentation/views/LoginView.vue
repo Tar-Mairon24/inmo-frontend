@@ -110,17 +110,24 @@ const password = ref('')
 const rememberMe = ref(false)
 const error = ref('')
 
-const auth = useAuthStore()
+const authStore = useAuthStore()
 const router = useRouter()
 
 const handleLogin = async () => {
   error.value = ''
   try {
-    await auth.login({ email: email.value, password: password.value, rememberMe: rememberMe.value })
+    await authStore.login({
+      email: email.value,
+      password: password.value,
+      rememberMe: rememberMe.value
+    })
 
-    if (auth.user) {
+    if (authStore.user) {
       router.push('/dashboard')
+    } else {
+      error.value = 'Login failed'
     }
+
   } catch (err: unknown) {
     if (err instanceof Error) {
       error.value = err.message || 'Login failed'
