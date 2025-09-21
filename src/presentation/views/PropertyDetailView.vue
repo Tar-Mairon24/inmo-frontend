@@ -114,8 +114,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import type { propertyDetail } from '@/models/Property'
-import ImageSlidePropertyDetails from '@/components/ImageSlidePropertyDetails.vue'
+import type { propertyDetail } from '@/domain/entities/Property'
+import ImageSlidePropertyDetails from '@/presentation/components/ImageSlidePropertyDetails.vue'
 
 const router = useRouter()
 const route = useRoute()

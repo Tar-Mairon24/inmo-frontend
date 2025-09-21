@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
-import type { PropertyCard as Property } from '@/models/Property'
+import type { PropertyCard as Property } from '@/domain/entities/Property'
 
 const props = defineProps<{
   property: Property

@@ -1,6 +1,6 @@
 import type { User } from "./user"
 
-export type PropertyCard = {
+export interface PropertyCard {
   id: number
   title: string
   price: number
@@ -15,7 +15,7 @@ export type PropertyCard = {
   created_at: string
 }
 
-export type propertyDetail = {
+export interface propertyDetail {
   id: number
   title: string
   address: string

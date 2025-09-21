@@ -23,8 +23,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import PropertyCard from '@/components/PropertyCard.vue'
-import type { PropertyCard as Property } from '@/models/Property'
-import { useAuthStore } from '@/stores/authStore'
+import type { PropertyCard as Property } from '@/domain/entities/Property'
+import { useAuthStore } from '@/presentation/stores/authStore'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
 
