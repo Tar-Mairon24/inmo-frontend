@@ -21,5 +21,16 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { AuthResponse, isAuthenticated, login }
+  const logout = async () => {
+    try {
+      await authService.logout()
+      AuthResponse.value = null
+      isAuthenticated.value = false
+    } catch (error) {
+      console.error('Logout failed:', error)
+      throw error
+    }
+  }
+
+  return { AuthResponse, isAuthenticated, login, logout }
 })

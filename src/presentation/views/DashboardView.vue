@@ -26,6 +26,7 @@ import PropertyCard from '../components/PropertyCard.vue'
 import type { PropertyCard as Property } from '../../domain/entities/Property'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/presentation/stores/authStore'
 
 const properties = ref<Property[]>([])
 
@@ -60,6 +61,7 @@ onMounted(async () => {
 const router = useRouter()
 
 const handleLogout = () => {
+  useAuthStore().logout()
   router.push('/login')
 }
 
