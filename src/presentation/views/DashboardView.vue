@@ -60,9 +60,14 @@ onMounted(async () => {
 
 const router = useRouter()
 
-const handleLogout = () => {
-  useAuthStore().logout()
-  router.push('/login')
+const handleLogout = async () => {
+  try {
+    await useAuthStore().logout()
+    window.location.href = '/login'
+  } catch (error) {
+    console.error('Logout error:', error)
+    window.location.href = '/login'
+  }
 }
 
 </script>

@@ -13,8 +13,8 @@ export class AuthApi extends BaseApi {
     });
   }
 
-  async logout(): Promise<void> {
-    return this.request<void>('/auth/logout', {
+  async logout(user_id: number): Promise<void> {
+    return this.request<void>(`/auth/logout/${user_id}`, {
       method: 'POST'
     });
   }

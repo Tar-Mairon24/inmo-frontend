@@ -26,8 +26,14 @@ export class AuthRepository implements IAuthRepository {
     }
   }
 
-  async logout(): Promise<void> {
-    return this.api.logout();
+  async logout(user_id: number): Promise<void> {
+    try {
+      const response = await this.api.logout(user_id);
+      console.log("Logout response:", response);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      throw new Error("Logout failed: " + (error as Error).message);
+    }
   }
 
   async isAuthenticated(): Promise<boolean> {
