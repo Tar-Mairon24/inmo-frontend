@@ -5,14 +5,10 @@ export class AuthStorage {
 
   saveUser(user: User, rememberMe: boolean): void {
     if (rememberMe) {
-      // Save to localStorage for persistence
       localStorage.setItem(AuthStorage.USER_KEY, JSON.stringify(user))
-      // Clear from sessionStorage to avoid conflicts
       sessionStorage.removeItem(AuthStorage.USER_KEY)
     } else {
-      // Save to sessionStorage only (cleared on browser close)
       sessionStorage.setItem(AuthStorage.USER_KEY, JSON.stringify(user))
-      // Clear from localStorage
       localStorage.removeItem(AuthStorage.USER_KEY)
     }
   }
@@ -36,7 +32,6 @@ export class AuthStorage {
     sessionStorage.removeItem(AuthStorage.USER_KEY)
   }
 
-  // Check if user is in localStorage (means they checked "Remember Me")
   wasRemembered(): boolean {
     return localStorage.getItem(AuthStorage.USER_KEY) !== null
   }

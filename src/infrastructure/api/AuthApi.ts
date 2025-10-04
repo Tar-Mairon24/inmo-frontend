@@ -20,7 +20,9 @@ export class AuthApi extends BaseApi {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    const response = await this.request<{ authenticated: boolean }>('/auth/status');
+    const response = await this.request<{ authenticated: boolean }>('/auth/status', {
+      method: 'GET'
+    });
     return response.authenticated;
   }
 }

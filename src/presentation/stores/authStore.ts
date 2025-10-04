@@ -28,9 +28,22 @@ export const useAuthStore = defineStore('auth', () => {
       isAuthenticated.value = false
     } catch (error) {
       console.error('Logout failed:', error)
+      AuthResponse.value = null
+      isAuthenticated.value = false
       throw error
     }
   }
 
-  return { AuthResponse, isAuthenticated, login, logout }
+  const initializeAuth = async () => {
+    const storedUser = authService.getCurrentUser()
+    console.log('Stored user on init:', storedUser)
+    if (storedUser) {
+      AuthResponse.value = { data: storedUser, message: 'User loaded from storage', success: true }
+      isAuthenticated.value = true
+    } else {
+      isAuthenticated.value = await authService.isAuthenticated()
+    }
+  }
+
+  return { AuthResponse, isAuthenticated, login, logout, initializeAuth }
 })

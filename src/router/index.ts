@@ -9,33 +9,41 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'dashboard',
+      name: 'home',
       component: DashboardView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/property/:id',
       name: 'property',
       component: PropertyDetailView,
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView,
+      meta: { requiresAuth: false }
     },
   ],
 })
 
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
-  if (!auth.isAuthenticated && to.name !== 'login') {
+
+  const requiresAuth = to.meta.requiresAuth !== false
+  const isAuthenticated = auth.isAuthenticated
+
+  if (requiresAuth && !isAuthenticated) {
     next({ name: 'login' })
-  } else if (auth.isAuthenticated && to.name === 'login') {
+  } else if (!requiresAuth && isAuthenticated && to.name === 'login') {
     next({ name: 'dashboard' })
   } else {
     next()

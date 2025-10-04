@@ -17,21 +17,39 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
-    await this.authRepository.logout(this.storage.getUser()?.id || 0)
+    const currentUser = this.getCurrentUser()
+
+    if (!currentUser) {
+      throw new Error("No user is currently logged in.")
+    }
+
+    await this.authRepository.logout(currentUser.id)
     this.storage.clearUser()
+
   }
 
   async isAuthenticated(): Promise<boolean> {
-    const storedUser = this.storage.getUser()
-    if (storedUser) {
-      return true
-    }
+    try {
+      const isAuthenticated = await this.authRepository.isAuthenticated()
 
-    if (!this.storage.wasRemembered()) {
+      if (!isAuthenticated) {
+        console.error("User is not authenticated according to the server.")
+        this.storage.clearUser()
+        return false
+      }
+
+      const storedUser = this.storage.getUser()
+      if (!storedUser) {
+        console.error("No user found in storage despite server authentication.")
+        return false
+      }
+
+      return true
+    } catch (error) {
+      console.error("Authentication check failed:", error)
+      this.storage.clearUser()
       return false
     }
-
-    return this.authRepository.isAuthenticated()
   }
 
   getCurrentUser(): User | null {

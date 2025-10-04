@@ -1,5 +1,5 @@
 export class BaseApi {
-  protected baseUrl = import.meta.env.Api_URL || 'http://localhost:8081/api/v1'
+  protected baseUrl = import.meta.env.Api_URL || 'http://localhost:3000/api/v1'
 
   protected async request<T>(
     endpoint: string,
