@@ -37,6 +37,12 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    return this.api.isAuthenticated();
+    try {
+      const response = await this.api.isAuthenticated()
+      return response
+    } catch (error) {
+      console.error('Authentication check failed:', error)
+      throw new Error('Authentication check failed: ' + (error as Error).message)
+    }
   }
 }

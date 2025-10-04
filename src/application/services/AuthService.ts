@@ -30,7 +30,9 @@ export class AuthService {
 
   async isAuthenticated(): Promise<boolean> {
     try {
+      console.log('AuthService: Checking authentication with backend in service')
       const isAuthenticated = await this.authRepository.isAuthenticated()
+      console.log('AuthService: Backend authentication status:', isAuthenticated)
 
       if (!isAuthenticated) {
         console.error("User is not authenticated according to the server.")

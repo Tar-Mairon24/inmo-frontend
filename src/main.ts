@@ -12,5 +12,6 @@ app.use(router)
 
 const auth = useAuthStore()
 auth.initializeAuth().then(() => {
+  app.use(router)
   app.mount('#app')
 })

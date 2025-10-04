@@ -22,7 +22,7 @@ export class DIContainer {
       const authService = new AuthService(authRepository, authStorage)
       this.services.set('AuthService', authService)
     }
-    return this.services.get('AuthService')
+    return this.services.get('AuthService') 
   }
 }
 
