@@ -4,7 +4,7 @@ import type { AuthResponse } from "@/domain/entities/auth";
 
 export class AuthApi extends BaseApi {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/auth/login', {
+    return this.request<AuthResponse>('auth/login', {
       method: 'POST',
       body: JSON.stringify({
         email: credentials.email,
@@ -20,7 +20,7 @@ export class AuthApi extends BaseApi {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    const response = await this.request<{ authenticated: boolean }>('/auth/status', {
+    const response = await this.request<{ authenticated: boolean }>('auth/status', {
       method: 'GET'
     });
     return response.authenticated;
