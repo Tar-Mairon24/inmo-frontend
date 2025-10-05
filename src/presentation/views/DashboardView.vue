@@ -27,6 +27,7 @@ import type { PropertyCard as Property } from '../../domain/entities/Property'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/presentation/stores/authStore'
+import { container } from '@/shared/di/Container'
 
 const properties = ref<Property[]>([])
 
@@ -36,22 +37,16 @@ const showDetails = (property: Property) => {
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8081/api/v1/properties', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    })
-    const data = await response.json()
+    const propertyService = container.getPropertyService()
+    const fetchedProperties = await propertyService.getAllProperties()
 
-    if (Array.isArray(data)) {
-      properties.value = data.map((property: Property) => ({
+    if (Array.isArray(fetchedProperties)) {
+      properties.value = fetchedProperties.map((property: Property) => ({
         ...property,
         image: placeholderImage
       }))
     } else {
-      console.error('Unexpected data format:', data)
+      console.error('Unexpected data format:', fetchedProperties)
     }
   } catch (error) {
     console.error('Error fetching properties:', error)

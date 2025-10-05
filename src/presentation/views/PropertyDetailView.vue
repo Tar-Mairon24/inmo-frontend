@@ -114,12 +114,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import type { propertyDetail } from '@/domain/entities/Property'
+import type { PropertyDetail } from '@/domain/entities/Property'
 import ImageSlidePropertyDetails from '@/presentation/components/ImageSlidePropertyDetails.vue'
+import { container } from '@/shared/di/Container'
 
 const router = useRouter()
 const route = useRoute()
-const property = ref<propertyDetail | null>(null)
+const property = ref<PropertyDetail | null>(null)
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString()
@@ -129,22 +130,13 @@ onMounted(async () => {
   const propertyId = route.params.id
 
   try {
-    const response = await fetch(`http://localhost:8081/api/v1/properties/${propertyId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    })
+    const propertyService = container.getPropertyService()
+    const response = await propertyService.getPropertyById(Number(propertyId))
 
-    const data = await response.json()
-
-    if (response.ok && data) {
-      property.value = data
-      // If your backend returns images, replace the placeholder images
-      // images.value = data.images || images.value
+    if (response) {
+      property.value = response
     } else {
-      console.error('Failed to fetch property details:', data)
+      console.error('Failed to fetch property details:', response)
       router.push('/')
     }
   } catch (error) {

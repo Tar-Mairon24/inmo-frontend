@@ -15,7 +15,7 @@ export interface PropertyCard {
   created_at: string
 }
 
-export interface propertyDetail {
+export interface PropertyDetail {
   id: number
   title: string
   address: string
