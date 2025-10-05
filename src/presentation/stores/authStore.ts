@@ -35,15 +35,25 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const initializeAuth = async () => {
+  try {
     const storedUser = authService.getCurrentUser()
-    console.log('Stored user on init:', storedUser)
     if (storedUser) {
-      AuthResponse.value = { data: storedUser, message: 'User loaded from storage', success: true }
+      AuthResponse.value = {
+        data: storedUser,
+        message: 'Session restored',
+        success: true
+      }
       isAuthenticated.value = true
-    } else {
-      isAuthenticated.value = await authService.isAuthenticated()
+      return
     }
+
+    const authenticated = await authService.isAuthenticated()
+    isAuthenticated.value = authenticated
+  } catch (error) {
+    console.error('Failed to initialize auth:', error)
+    isAuthenticated.value = false
   }
+}
 
   return { AuthResponse, isAuthenticated, login, logout, initializeAuth }
 })

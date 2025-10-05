@@ -1,0 +1,15 @@
+services:
+  frontend:
+    build: ./
+    container_name: inmo-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost/
+    networks:
+      - inmo-app
+
+networks:
+  inmo-app:
+    external: true

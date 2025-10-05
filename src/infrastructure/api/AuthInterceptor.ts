@@ -8,15 +8,22 @@ export class AuthInterceptor {
   ): Promise<T> {
 
     if (response.status === 401) {
-      console.log('Unauthorized. Attempting to refresh token...')
+      const url = response.url
+
+      const shouldSkipRefresh = url.includes('api/v1/auth/')
+
+      if (shouldSkipRefresh) {
+        const errorText = await response.text()
+        console.error('API Error:', errorText)
+        throw new Error(`API request failed with status ${response.status}`)
+      }
 
       const refreshSuccess = await TokenRefreshService.refreshToken()
       if (refreshSuccess) {
-        console.log('Token refreshed. Retrying original request...')
         const retryResponse = await originalRequest()
 
         if (!retryResponse.ok) {
-          throw new Error(`API request failed with status ${retryResponse.status}`)
+          throw new Error(`Retry failed with status ${retryResponse.status}`)
         }
 
         return retryResponse.json()

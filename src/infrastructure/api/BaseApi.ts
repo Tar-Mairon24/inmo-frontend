@@ -8,7 +8,7 @@ export class BaseApi {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const makeRequest = () => fetch(`${this.baseUrl}api/${this.apiVersion}/${endpoint}`, {
+    const makeRequest = () => fetch(`${this.baseUrl}api/${this.apiVersion}${endpoint}`, {
       headers: { 'Content-Type': 'application/json' },
       ...options,
       credentials: 'include',
