@@ -67,6 +67,6 @@ onUnmounted(() => {
 defineExpose({
   closeMenu,
   toggleMenu,
-  isMenuOpen
+  isMenuOpen,
 })
 </script>

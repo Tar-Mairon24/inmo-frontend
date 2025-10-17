@@ -1,4 +1,4 @@
-import type { User } from "./user"
+import type { User } from './user'
 
 export interface PropertyCard {
   id: number
@@ -45,21 +45,15 @@ export interface PropertyDetail {
 }
 
 export type property_type =
-  "house" |
-  "apartment" |
-  "land" |
-  "commercial" |
-  "storehouse" |
-  "office" |
-  "industrial" |
-  "other"
+  | 'house'
+  | 'apartment'
+  | 'land'
+  | 'commercial'
+  | 'storehouse'
+  | 'office'
+  | 'industrial'
+  | 'other'
 
-export type transaction_type =
-  "sale" |
-  "rent"
+export type transaction_type = 'sale' | 'rent'
 
-export type property_status =
-  "available" |
-  "sold" |
-  "rented" |
-  "reserved"
+export type property_status = 'available' | 'sold' | 'rented' | 'reserved'

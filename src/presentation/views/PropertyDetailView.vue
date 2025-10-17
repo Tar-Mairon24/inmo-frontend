@@ -2,14 +2,19 @@
   <div class="min-h-screen bg-gray-50 p-8">
     <HamburgerMenu />
     <div class="max-w-4xl mx-auto">
-      <button @click="router.back()" class="mb-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+      <button
+        @click="router.back()"
+        class="mb-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+      >
         ← Back to Dashboard
       </button>
       <div v-if="property" class="bg-white rounded-lg shadow p-8">
         <ImageSlidePropertyDetails />
         <div>
           <h1 class="text-3xl font-bold mb-4">{{ property.title }}</h1>
-          <p class="text-2xl text-green-600 font-bold mb-6">${{ property.price.toLocaleString() }}</p>
+          <p class="text-2xl text-green-600 font-bold mb-6">
+            ${{ property.price.toLocaleString() }}
+          </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
               <h3 class="text-xl font-bold mb-3">Basic Information</h3>
@@ -65,7 +70,11 @@
             <div v-if="property.gas_type && property.gas_type.length > 0">
               <h3 class="text-xl font-bold mb-3">Gas Types</h3>
               <div class="flex flex-wrap gap-2">
-                <span v-for="gas in property.gas_type" :key="gas" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                <span
+                  v-for="gas in property.gas_type"
+                  :key="gas"
+                  class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                >
                   {{ gas }}
                 </span>
               </div>
@@ -75,7 +84,11 @@
             <div v-if="property.amenities && property.amenities.length > 0">
               <h3 class="text-xl font-bold mb-3">Amenities</h3>
               <div class="flex flex-wrap gap-2">
-                <span v-for="amenity in property.amenities" :key="amenity" class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                <span
+                  v-for="amenity in property.amenities"
+                  :key="amenity"
+                  class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                >
                   {{ amenity }}
                 </span>
               </div>
@@ -85,7 +98,11 @@
             <div v-if="property.extras && property.extras.length > 0">
               <h3 class="text-xl font-bold mb-3">Extras</h3>
               <div class="flex flex-wrap gap-2">
-                <span v-for="extra in property.extras" :key="extra" class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                <span
+                  v-for="extra in property.extras"
+                  :key="extra"
+                  class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm"
+                >
                   {{ extra }}
                 </span>
               </div>
@@ -95,7 +112,11 @@
             <div v-if="property.utilities && property.utilities.length > 0">
               <h3 class="text-xl font-bold mb-3">Utilities</h3>
               <div class="flex flex-wrap gap-2">
-                <span v-for="utility in property.utilities" :key="utility" class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
+                <span
+                  v-for="utility in property.utilities"
+                  :key="utility"
+                  class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm"
+                >
                   {{ utility }}
                 </span>
               </div>

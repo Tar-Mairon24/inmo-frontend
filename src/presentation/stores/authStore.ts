@@ -35,25 +35,25 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const initializeAuth = async () => {
-  try {
-    const storedUser = authService.getCurrentUser()
-    if (storedUser) {
-      AuthResponse.value = {
-        data: storedUser,
-        message: 'Session restored',
-        success: true
+    try {
+      const storedUser = authService.getCurrentUser()
+      if (storedUser) {
+        AuthResponse.value = {
+          data: storedUser,
+          message: 'Session restored',
+          success: true,
+        }
+        isAuthenticated.value = true
+        return
       }
-      isAuthenticated.value = true
-      return
-    }
 
-    const authenticated = await authService.isAuthenticated()
-    isAuthenticated.value = authenticated
-  } catch (error) {
-    console.error('Failed to initialize auth:', error)
-    isAuthenticated.value = false
+      const authenticated = await authService.isAuthenticated()
+      isAuthenticated.value = authenticated
+    } catch (error) {
+      console.error('Failed to initialize auth:', error)
+      isAuthenticated.value = false
+    }
   }
-}
 
   return { AuthResponse, isAuthenticated, login, logout, initializeAuth }
 })

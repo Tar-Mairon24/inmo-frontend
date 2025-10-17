@@ -1,10 +1,10 @@
-import { AuthService } from "@/application/services/AuthService"
-import { PropertyService } from "@/application/services/PropertyService"
-import { AuthApi } from "@/infrastructure/api/AuthApi"
-import { PropertyApi } from "@/infrastructure/api/PropertyApi"
-import { AuthRepository } from "@/infrastructure/repositories/AuthRepositoty"
-import { PropertyRepository } from "@/infrastructure/repositories/PropertyRepository"
-import { AuthStorage } from "@/infrastructure/storage/AuthStorage"
+import { AuthService } from '@/application/services/AuthService'
+import { PropertyService } from '@/application/services/PropertyService'
+import { AuthApi } from '@/infrastructure/api/AuthApi'
+import { PropertyApi } from '@/infrastructure/api/PropertyApi'
+import { AuthRepository } from '@/infrastructure/repositories/AuthRepositoty'
+import { PropertyRepository } from '@/infrastructure/repositories/PropertyRepository'
+import { AuthStorage } from '@/infrastructure/storage/AuthStorage'
 
 export class DIContainer {
   private static instance: DIContainer

@@ -1,7 +1,8 @@
 <template>
-  <div class="bg-white rounded-lg shadow p-4 flex flex-col cursor-pointer hover:shadow-lg transition
-              min-w-[250px] max-w-[400px]"
-              @click="onClick">
+  <div
+    class="bg-white rounded-lg shadow p-4 flex flex-col cursor-pointer hover:shadow-lg transition min-w-[250px] max-w-[400px]"
+    @click="onClick"
+  >
     <img :src="image" alt="Property" class="w-full h-48 object-cover rounded mb-4" />
     <h2 class="text-xl font-bold mb-2">{{ property.title }}</h2>
     <p class="text-gray-700 mb-2">Price: ${{ property.price.toLocaleString() }}</p>

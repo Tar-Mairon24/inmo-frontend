@@ -1,7 +1,7 @@
-import type { User } from '@/domain/entities/user';
+import type { User } from '@/domain/entities/user'
 
 export class AuthStorage {
-  private static USER_KEY = 'auth_user';
+  private static USER_KEY = 'auth_user'
 
   saveUser(user: User, rememberMe: boolean): void {
     if (rememberMe) {
@@ -15,8 +15,8 @@ export class AuthStorage {
 
   getUser(): User | null {
     // Check localStorage first, then sessionStorage
-    const stored = localStorage.getItem(AuthStorage.USER_KEY) ||
-                   sessionStorage.getItem(AuthStorage.USER_KEY)
+    const stored =
+      localStorage.getItem(AuthStorage.USER_KEY) || sessionStorage.getItem(AuthStorage.USER_KEY)
     if (!stored) return null
 
     try {

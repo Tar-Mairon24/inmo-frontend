@@ -3,16 +3,24 @@
     <div class="px-4 py-6">
       <div class="flex items-center justify-between mb-6 gap-4">
         <div>
-          <span class="grid h-10 w-28 md:h-12 md:w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-            <img src="@/assets/images/MT_Logo.jpg" alt="Logo" class="h-8 w-24 md:h-10 md:w-28 object-contain" />
+          <span
+            class="grid h-10 w-28 md:h-12 md:w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+          >
+            <img
+              src="@/assets/images/MT_Logo.jpg"
+              alt="Logo"
+              class="h-8 w-24 md:h-10 md:w-28 object-contain"
+            />
           </span>
         </div>
-        <button
-          @click="$emit('close')"
-          class="p-1 rounded-md hover:bg-gray-100"
-        >
+        <button @click="$emit('close')" class="p-1 rounded-md hover:bg-gray-100">
           <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
           </svg>
         </button>
       </div>
@@ -23,9 +31,11 @@
             to="/dashboard"
             @click="$emit('close')"
             class="block rounded-lg px-4 py-2 text-sm font-medium transition-colors"
-            :class="$route.path === '/dashboard'
-              ? 'bg-gray-100 text-gray-700'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'"
+            :class="
+              $route.path === '/dashboard'
+                ? 'bg-gray-100 text-gray-700'
+                : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+            "
           >
             Dashboard
           </router-link>
@@ -171,7 +181,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAuthStore } from '@/presentation/stores/authStore'
-import logoutIcon  from '@/assets/icons/logout-icon.png'
+import logoutIcon from '@/assets/icons/logout-icon.png'
 
 const emit = defineEmits<{
   close: []

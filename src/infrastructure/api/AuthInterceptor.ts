@@ -4,9 +4,8 @@ import { container } from '@/shared/di/Container'
 export class AuthInterceptor {
   static async handleResponse<T>(
     response: Response,
-    originalRequest: () => Promise<Response>
+    originalRequest: () => Promise<Response>,
   ): Promise<T> {
-
     if (response.status === 401) {
       const url = response.url
 
@@ -39,7 +38,7 @@ export class AuthInterceptor {
       throw new Error(`API request failed with status ${response.status}`)
     }
 
-    return response.json();
+    return response.json()
   }
 
   private static async logoutUser(): Promise<void> {

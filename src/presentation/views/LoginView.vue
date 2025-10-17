@@ -119,11 +119,10 @@ const handleLogin = async () => {
     await authStore.login({
       email: email.value,
       password: password.value,
-      rememberMe: rememberMe.value
+      rememberMe: rememberMe.value,
     })
 
     router.push('/dashboard')
-
   } catch (err: unknown) {
     if (err instanceof Error) {
       error.value = err.message || 'Login failed'
@@ -132,7 +131,4 @@ const handleLogin = async () => {
     }
   }
 }
-
 </script>
-
-

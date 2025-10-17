@@ -2,7 +2,9 @@
   <DashboardLayout>
     <div class="p-8">
       <h1 class="text-3xl font-bold mb-8">Properties Dashboard</h1>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
         <PropertyCard
           v-for="property in properties"
           :key="property.id"
@@ -39,7 +41,7 @@ onMounted(async () => {
     if (Array.isArray(fetchedProperties)) {
       properties.value = fetchedProperties.map((property: Property) => ({
         ...property,
-        image: placeholderImage
+        image: placeholderImage,
       }))
     } else {
       console.error('Unexpected data format:', fetchedProperties)
