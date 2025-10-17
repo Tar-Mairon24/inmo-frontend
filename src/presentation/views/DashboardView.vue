@@ -3,7 +3,8 @@
     <div class="p-8">
       <h1 class="text-3xl font-bold mb-8">Properties Dashboard</h1>
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        v-if="properties.length > 0"
+        class="flex flex-col items-center justify-center py-24"
       >
         <PropertyCard
           v-for="property in properties"
@@ -12,7 +13,14 @@
           :image="placeholderImage"
           @select="showDetails"
         />
+
       </div>
+      <EmptyState v-else
+        title="Oops — No encontramos propiedades"
+        subtitle="No tenemos propiedades para mostrar en este momento."
+        actionLabel="Crear propiedad"
+        @retry="fetchProperties"
+      />
     </div>
   </DashboardLayout>
 </template>
@@ -25,6 +33,7 @@ import type { PropertyCard as Property } from '@/domain/entities/Property'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
 import { container } from '@/shared/di/Container'
+import EmptyState from '../components/errorpages/EmptyState.vue'
 
 const properties = ref<Property[]>([])
 const router = useRouter()
@@ -33,7 +42,7 @@ const showDetails = (property: Property) => {
   router.push(`/property/${property.id}`)
 }
 
-onMounted(async () => {
+const fetchProperties = async () => {
   try {
     const propertyService = container.getPropertyService()
     const fetchedProperties = await propertyService.getAllProperties()
@@ -45,9 +54,15 @@ onMounted(async () => {
       }))
     } else {
       console.error('Unexpected data format:', fetchedProperties)
+      properties.value = []
     }
   } catch (error) {
     console.error('Error fetching properties:', error)
+    properties.value = []
   }
+}
+
+onMounted(async () => {
+  await fetchProperties()
 })
 </script>
