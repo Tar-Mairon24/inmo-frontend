@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50 p-8">
+    <HamburgerMenu />
     <div class="max-w-4xl mx-auto">
       <button @click="router.back()" class="mb-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
         ← Back to Dashboard
@@ -115,8 +116,9 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { PropertyDetail } from '@/domain/entities/Property'
-import ImageSlidePropertyDetails from '@/presentation/components/ImageSlidePropertyDetails.vue'
+import ImageSlidePropertyDetails from '@/presentation/components/properties/ImageSlidePropertyDetails.vue'
 import { container } from '@/shared/di/Container'
+import HamburgerMenu from '../components/UI/HamburgerMenu.vue'
 
 const router = useRouter()
 const route = useRoute()
