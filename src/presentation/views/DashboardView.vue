@@ -4,7 +4,7 @@
       <h1 class="text-3xl font-bold mb-8">Properties Dashboard</h1>
       <div
         v-if="properties.length > 0"
-        class="flex flex-col items-center justify-center py-24"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
       >
         <PropertyCard
           v-for="property in properties"
