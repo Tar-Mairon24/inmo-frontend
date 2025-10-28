@@ -24,4 +24,14 @@ export class PropertyRepository implements IPropertyRepository {
       throw new Error('Failed to fetch all properties: ' + (error as Error).message)
     }
   }
+
+  async deleteProperty(property_id: number): Promise<boolean> {
+    try {
+      const result = await this.api.deleteProperty(property_id)
+      return result
+    } catch (error) {
+      console.error('Failed to delete property:', error)
+      throw new Error('Failed to delete property: ' + (error as Error).message)
+    }
+  }
 }

@@ -10,4 +10,8 @@ export class PropertyService {
   async getAllProperties() {
     return this.propertyRepository.getAllProperties()
   }
+
+  async deleteProperty(property_id: number) {
+    return this.propertyRepository.deleteProperty(property_id)
+  }
 }

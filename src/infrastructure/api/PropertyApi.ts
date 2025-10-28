@@ -13,4 +13,16 @@ export class PropertyApi extends BaseApi {
       method: 'GET',
     })
   }
+
+  async deleteProperty(property_id: number): Promise<boolean> {
+    try {
+      await this.request<void>(`/properties/${property_id}`, {
+        method: 'DELETE',
+      })
+      return true
+    } catch (error) {
+      console.error('Error deleting property:', error)
+      return false
+    }
+  }
 }

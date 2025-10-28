@@ -25,6 +25,10 @@ export class AuthInterceptor {
           throw new Error(`Retry failed with status ${retryResponse.status}`)
         }
 
+        if (retryResponse.status === 204) {
+          return undefined as T
+        }
+
         return retryResponse.json()
       } else {
         await this.logoutUser()
@@ -36,6 +40,10 @@ export class AuthInterceptor {
       const errorText = await response.text()
       console.error('API Error:', errorText)
       throw new Error(`API request failed with status ${response.status}`)
+    }
+
+    if (response.status === 204) {
+      return undefined as T
     }
 
     return response.json()
