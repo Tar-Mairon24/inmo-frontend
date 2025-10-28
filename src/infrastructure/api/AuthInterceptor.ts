@@ -1,7 +1,8 @@
 import { TokenRefreshService } from '@/application/services/TokenRefreshService'
-import { container } from '@/shared/di/Container'
 
 export class AuthInterceptor {
+  private static isLoggingOut = false
+
   static async handleResponse<T>(
     response: Response,
     originalRequest: () => Promise<Response>,
@@ -14,25 +15,33 @@ export class AuthInterceptor {
       if (shouldSkipRefresh) {
         const errorText = await response.text()
         console.error('API Error:', errorText)
+
+        if (window.location.pathname !== '/login') {
+          this.redirectToLogin()
+        }
         throw new Error(`API request failed with status ${response.status}`)
       }
 
-      const refreshSuccess = await TokenRefreshService.refreshToken()
-      if (refreshSuccess) {
-        const retryResponse = await originalRequest()
+      if (!this.isLoggingOut) {
+        const refreshSuccess = await TokenRefreshService.refreshToken()
+        if (refreshSuccess) {
+          const retryResponse = await originalRequest()
 
-        if (!retryResponse.ok) {
-          throw new Error(`Retry failed with status ${retryResponse.status}`)
+          if (!retryResponse.ok) {
+            throw new Error(`Retry failed with status ${retryResponse.status}`)
+          }
+
+          if (retryResponse.status === 204) {
+            return undefined as T
+          }
+
+          return retryResponse.json()
+        } else {
+          this.redirectToLogin()
+          throw new Error('Session expired. Please log in again.')
         }
-
-        if (retryResponse.status === 204) {
-          return undefined as T
-        }
-
-        return retryResponse.json()
       } else {
-        await this.logoutUser()
-        throw new Error('Session expired. Please log in again.')
+        throw new Error('User being logged out')
       }
     }
 
@@ -49,14 +58,17 @@ export class AuthInterceptor {
     return response.json()
   }
 
-  private static async logoutUser(): Promise<void> {
-    try {
-      const authService = container.getAuthService()
-      await authService.logout()
-      window.location.href = '/login'
-    } catch (error) {
-      console.error('Error during logout:', error)
+  private static redirectToLogin(): void {
+    if (this.isLoggingOut) return
+
+    this.isLoggingOut = true
+    console.log('Redirecting to login due to authentication failure.')
+
+    if (window.location.pathname !== '/login') {
       window.location.href = '/login'
     }
+    setTimeout(() => {
+      this.isLoggingOut = false
+    }, 3000)
   }
 }

@@ -44,11 +44,13 @@ import type { PropertyCard as Property } from '@/domain/entities/Property'
 import placeholderImage from '@/assets/images/propertyImagePlaceholder.jpg'
 import { useRouter } from 'vue-router'
 import { container } from '@/shared/di/Container'
+import { useAuthStore } from '@/presentation/stores/authStore'
 import EmptyState from '../components/errorpages/EmptyState.vue'
-import ConfirmationPopUp from '@/presentation/components/UI/confirmationPopUp.vue'
+import ConfirmationPopUp from '@/presentation/components/UI/ConfirmationPopUp.vue'
 
 const properties = ref<Property[]>([])
 const router = useRouter()
+const AuthStore = useAuthStore()
 const propertyService = container.getPropertyService()
 const showDeletePopup = ref(false)
 const propertyToDelete = ref<number | null>(null)
@@ -84,6 +86,12 @@ const handleDeleteCancel = () => {
 }
 
 const fetchProperties = async () => {
+  if (!AuthStore.isAuthenticated) {
+    console.log('User not authenticated, skipping property fetch')
+    router.push('/login')
+    return
+  }
+
   try {
     const fetchedProperties = await propertyService.getAllProperties()
 
@@ -99,10 +107,20 @@ const fetchProperties = async () => {
   } catch (error) {
     console.error('Error fetching properties:', error)
     properties.value = []
+
+    if (error instanceof Error && error.message.includes('401')) {
+      console.log('Authentication error, redirecting to login')
+      router.push('/login')
+    }
   }
 }
 
 onMounted(async () => {
-  await fetchProperties()
+  if (AuthStore.isAuthenticated) {
+    await fetchProperties()
+  } else {
+    console.log('User not authenticated on mount, redirecting to login')
+    router.push('/login')
+  }
 })
 </script>

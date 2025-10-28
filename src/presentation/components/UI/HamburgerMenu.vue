@@ -24,6 +24,7 @@
     <div
       v-if="isMenuOpen"
       @click="closeMenu"
+      @logout-request="handleLogoutRequest"
       class="fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300"
     ></div>
 
@@ -31,7 +32,11 @@
       class="fixed top-0 left-0 h-full w-64 z-40 transform transition-transform duration-300 ease-in-out"
       :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
     >
-      <SideMenu @close="closeMenu" />
+      <SideMenu
+        v-if="isMenuOpen"
+        @close="closeMenu"
+        @logout-request="handleLogoutRequest"
+      />
     </div>
   </div>
 </template>
@@ -39,6 +44,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import SideMenu from './SideMenu.vue'
+
+const emit = defineEmits<{
+  'logout-request': []
+}>()
 
 const isMenuOpen = ref(false)
 
@@ -48,6 +57,11 @@ const toggleMenu = () => {
 
 const closeMenu = () => {
   isMenuOpen.value = false
+}
+
+const handleLogoutRequest = () => {
+  emit('logout-request')
+  closeMenu()
 }
 
 const handleEscape = (event: KeyboardEvent) => {

@@ -38,12 +38,25 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
 
+  if (!auth.isInitialized) {
+    await auth.initializeAuth()
+  }
+
   const requiresAuth = to.meta.requiresAuth !== false
   const isAuthenticated = auth.isAuthenticated
 
+  console.log('Router guard:', {
+    path: to.path,
+    requiresAuth,
+    isAuthenticated,
+    isInitialized: auth.isInitialized,
+  })
+
   if (requiresAuth && !isAuthenticated) {
+    console.log('Redirecting to login - not authenticated from ', from.path)
     next({ name: 'login' })
   } else if (to.name === 'login' && isAuthenticated) {
+    console.log('Redirecting to dashboard - already authenticated from ', from.path)
     next({ name: 'dashboard' })
   } else {
     next()

@@ -6,9 +6,9 @@ import './assets/base.css'
 import { useAuthStore } from './presentation/stores/authStore'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
-app.use(router)
+app.use(pinia)
 
 const auth = useAuthStore()
 auth.initializeAuth().then(() => {

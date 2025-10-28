@@ -35,7 +35,6 @@ export class AuthService {
 
       if (!isAuthenticated) {
         console.error('User is not authenticated according to the server.')
-        this.storage.clearUser()
         return false
       }
 
@@ -48,7 +47,6 @@ export class AuthService {
       return true
     } catch (error) {
       console.error('Authentication check failed:', error)
-      this.storage.clearUser()
       return false
     }
   }

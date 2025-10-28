@@ -167,9 +167,9 @@
         </div>
 
         <button
-          @click="handleLogout"
+          @click="requestLogout"
           class="flex-shrink-0 rounded-lg bg-blue-500 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 flex items-center justify-center"
-          title="Logout"
+          title="Cerrar sesión"
         >
           <img :src="logoutIcon" alt="logout" class="h-4 w-4" />
         </button>
@@ -179,26 +179,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed} from 'vue'
 import { useAuthStore } from '@/presentation/stores/authStore'
 import logoutIcon from '@/assets/icons/logout-icon.png'
 
 const emit = defineEmits<{
   close: []
+  'logout-request': []
 }>()
 
 const authStore = useAuthStore()
 
 const user = computed(() => authStore.AuthResponse?.data)
 
-const handleLogout = async () => {
-  try {
-    await authStore.logout()
-    emit('close')
-    window.location.href = '/login'
-  } catch (error) {
-    console.error('Logout error:', error)
-    window.location.href = '/login'
-  }
+const requestLogout = () => {
+  emit('logout-request')
 }
+
+
 </script>

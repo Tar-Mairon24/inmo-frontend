@@ -1,14 +1,13 @@
 <template>
   <div
     v-if="isOpen"
-    class="fixed inset-0 z-50 flex items-center justify-center"
+    class="fixed inset-0 z-[9999] flex items-center justify-center"
     @click.self="onCancel"
   >
     <!-- Backdrop -->
     <div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-
     <!-- Modal -->
-    <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+    <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6 z-10">      <!-- Icon -->
       <!-- Icon -->
       <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full"
            :class="iconBgClass">
