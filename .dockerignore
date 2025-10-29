@@ -13,3 +13,8 @@ dist
 .vscode
 .idea
 tests
+.editorconfig
+.eslintcache
+.prettierignore
+postcss.config.js
+.prettierrc.json

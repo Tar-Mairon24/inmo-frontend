@@ -1,7 +1,18 @@
 <template>
   <DashboardLayout>
     <div class="p-8">
-      <h1 class="text-3xl font-bold mb-8">Properties Dashboard</h1>
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Mis Propiedades</h1>
+        <button
+          @click="addProperty"
+          class="mr-8 py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none cursor-pointer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H4a1 1 0 110-2h6V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+          Agregar Propiedad
+        </button>
+      </div>
       <div
         v-if="properties.length > 0"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
@@ -13,6 +24,7 @@
           :image="placeholderImage"
           @select="showDetails"
           @delete="confirmDelete"
+          @edit="handleEdit"
         />
 
       </div>
@@ -57,6 +69,10 @@ const propertyToDelete = ref<number | null>(null)
 
 const showDetails = (property: Property) => {
   router.push(`/property/${property.id}`)
+}
+
+const handleEdit = (propertyId: number) => {
+  router.push(`/property/edit/${propertyId}`)
 }
 
 const confirmDelete = (propertyId: number) => {
@@ -113,6 +129,10 @@ const fetchProperties = async () => {
       router.push('/login')
     }
   }
+}
+
+const addProperty = () => {
+  router.push('/property/new')
 }
 
 onMounted(async () => {

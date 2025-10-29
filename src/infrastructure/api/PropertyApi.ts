@@ -14,6 +14,20 @@ export class PropertyApi extends BaseApi {
     })
   }
 
+  async createProperty(propertyData: PropertyDetail): Promise<PropertyDetail> {
+  return this.request<PropertyDetail>('/properties', {
+    method: 'POST',
+    body: JSON.stringify(propertyData),
+  })
+}
+
+async updateProperty(propertyId: number, propertyData: PropertyDetail): Promise<PropertyDetail> {
+  return this.request<PropertyDetail>(`/properties/${propertyId}`, {
+    method: 'PUT',
+    body: JSON.stringify(propertyData),
+  })
+}
+
   async deleteProperty(property_id: number): Promise<boolean> {
     try {
       await this.request<void>(`/properties/${property_id}`, {
